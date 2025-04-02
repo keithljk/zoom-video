@@ -1,16 +1,16 @@
 "use client";
 
-import { CSSProperties, useRef, useState } from "react";
 import ZoomVideo, {
-  type VideoClient,
   VideoQuality,
+  type VideoClient,
   type VideoPlayer,
 } from "@zoom/videosdk";
-import { CameraButton, MicButton } from "./MuteButtons";
 import { PhoneOff } from "lucide-react";
+import { CSSProperties, useRef, useState } from "react";
+import { CameraButton, MicButton } from "./MuteButtons";
 import { Button } from "./ui/button";
 
-const Videocall = (props: { slug: string; JWT: string }) => {
+const Videocall = (props: { slug: string; JWT: string; role: number }) => {
   const session = props.slug;
   const jwt = props.JWT;
   const [inSession, setInSession] = useState(false);
@@ -77,7 +77,7 @@ const Videocall = (props: { slug: string; JWT: string }) => {
   return (
     <div className="flex h-full w-full flex-1 flex-col">
       <h1 className="text-center text-3xl font-bold mb-4 mt-0">
-        Session: {session}
+        {props.role ? "Host" : "client"}Session: {session}
       </h1>
       <div
         className="flex w-full flex-1"
@@ -89,6 +89,7 @@ const Videocall = (props: { slug: string; JWT: string }) => {
       {!inSession ? (
         <div className="mx-auto flex w-64 flex-col self-center">
           <div className="w-4" />
+
           <Button className="flex flex-1" onClick={joinSession} title="join session">
             Join
           </Button>
